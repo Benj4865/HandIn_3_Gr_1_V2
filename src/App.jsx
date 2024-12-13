@@ -13,7 +13,7 @@ const App = () => {
         setInputValue(event.target.value);
     };
 
-    // Function to handle button click and make API request
+    // Function to handle button click and make API request.
     const handleButtonClick = async () => {
         try {
             const apiUrl = `https://localhost:7126/api/users/${inputValue}`;
