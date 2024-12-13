@@ -1,19 +1,16 @@
-// Import necessary dependencies
-// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
+import './App.css';
 
 const App = () => {
-    const [inputValue, setInputValue] = useState(''); // State to store input value
-    const [userData, setUserData] = useState(null); // State to store user data
-    const [errorMessage, setErrorMessage] = useState(''); // State to store error message
-    const [isLoading, setIsLoading] = useState(false); // State to show loading indicator
+    const [inputValue, setInputValue] = useState('');
+    const [userData, setUserData] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    // Function to handle input change
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
 
-    // Function to handle button click and make API request
     const handleButtonClick = async () => {
         if (!inputValue.trim()) {
             setErrorMessage('Please enter a valid User ID.');
@@ -39,7 +36,8 @@ const App = () => {
             }
 
             const data = await response.json();
-            setUserData(data); // Update state with user data
+            setUserData(data);
+            setInputValue(''); // Clear the input field after success
         } catch (error) {
             console.error('Error communicating with backend:', error);
             setErrorMessage('Error communicating with backend.');
@@ -48,7 +46,6 @@ const App = () => {
         }
     };
 
-    // Handle "Enter" key press
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleButtonClick();
@@ -56,37 +53,48 @@ const App = () => {
     };
 
     return (
-        <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-            <h1>React-C# Backend Example</h1>
-            <input
-                type="text"
-                placeholder="Enter User ID"
-                value={inputValue}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyPress}
-                style={{ padding: '10px', width: '300px', marginRight: '10px' }}
-            />
-            <button
-                onClick={handleButtonClick}
-                style={{ padding: '10px 20px', cursor: 'pointer' }}
-                disabled={isLoading}
-            >
-                {isLoading ? 'Loading...' : 'Submit'}
-            </button>
+        <div >
+            <div className="headstyle">
+                <h1 className="titletext">IMDB</h1>
+            </div>
+            <div className="containerStyle">
+                <label htmlFor="userId" className="input-label">Enter User ID:</label>
+                <input
+                    id="userId"
+                    type="text"
+                    placeholder="Enter User ID"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyPress}
+                    className="input-field"
+                />
+                <button className="buttonStyle"
+                        onClick={handleButtonClick}
+                        disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Submit'}
+                </button>
+            </div>
+
             {errorMessage && (
-                <div style={{ marginTop: '20px', color: 'red' }}>
+                <div className="error-message">
                     <strong>Error:</strong> {errorMessage}
                 </div>
             )}
-            {userData && (
-                <div style={{ marginTop: '20px', color: 'green' }}>
-                    <h2>User Details:</h2>
-                    <p><strong>User ID:</strong> {userData.userID}</p>
-                    <p><strong>User Link:</strong> {userData.userlink}</p>
-                    <p><strong>User Name:</strong> {userData.userName}</p>
-                    <p><strong>User Email:</strong> {userData.userEmail}</p>
+
+            <main className="maincontent">
+                <div>
+                    {userData && (
+                        <div className="user-data">
+                            <h2>User Details:</h2>
+                            <p><strong>User ID:</strong> {userData.userID}</p>
+                            <p><strong>User Link:</strong> {userData.userlink}</p>
+                            <p><strong>User Name:</strong> {userData.userName}</p>
+                            <p><strong>User Email:</strong> {userData.userEmail}</p>
+                        </div>
+                    )}
                 </div>
-            )}
+            </main>
         </div>
     );
 };
