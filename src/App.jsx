@@ -63,7 +63,7 @@ const App = () => {
                 placeholder="Enter User ID"
                 value={inputValue}
                 onChange={handleInputChange}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 style={{ padding: '10px', width: '300px', marginRight: '10px' }}
             />
             <button
