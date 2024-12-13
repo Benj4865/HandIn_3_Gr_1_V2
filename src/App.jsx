@@ -6,6 +6,8 @@ const App = () => {
     const [inputValue, setInputValue] = useState(''); // State to store input value
     const [userData, setUserData] = useState(null); // State to store user data
     const [errorMessage, setErrorMessage] = useState(''); // State to store error message
+    const [isLoading, setIsLoading] = useState(false); // State to show loading indicator
+
     // Function to handle input change
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -13,6 +15,16 @@ const App = () => {
 
     // Function to handle button click and make API request
     const handleButtonClick = async () => {
+        if (!inputValue.trim()) {
+            setErrorMessage('Please enter a valid User ID.');
+            setUserData(null);
+            return;
+        }
+
+        setIsLoading(true);
+        setErrorMessage('');
+        setUserData(null);
+
         try {
             const apiUrl = `https://localhost:7126/api/users/${inputValue}`;
             const response = await fetch(apiUrl, {
@@ -28,11 +40,18 @@ const App = () => {
 
             const data = await response.json();
             setUserData(data); // Update state with user data
-            setErrorMessage(''); // Clear any previous error message
         } catch (error) {
             console.error('Error communicating with backend:', error);
-            setUserData(null); // Clear user data on error
             setErrorMessage('Error communicating with backend.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Handle "Enter" key press
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            handleButtonClick();
         }
     };
 
@@ -44,13 +63,15 @@ const App = () => {
                 placeholder="Enter User ID"
                 value={inputValue}
                 onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
                 style={{ padding: '10px', width: '300px', marginRight: '10px' }}
             />
             <button
                 onClick={handleButtonClick}
                 style={{ padding: '10px 20px', cursor: 'pointer' }}
+                disabled={isLoading}
             >
-                Submit
+                {isLoading ? 'Loading...' : 'Submit'}
             </button>
             {errorMessage && (
                 <div style={{ marginTop: '20px', color: 'red' }}>
@@ -63,7 +84,6 @@ const App = () => {
                     <p><strong>User ID:</strong> {userData.userID}</p>
                     <p><strong>User Link:</strong> {userData.userlink}</p>
                     <p><strong>User Name:</strong> {userData.userName}</p>
-                    <p><strong>User Password:</strong> {userData.userPassword}</p>
                     <p><strong>User Email:</strong> {userData.userEmail}</p>
                 </div>
             )}
