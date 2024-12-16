@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import './App.css';
+import { Link } from 'react-router-dom';
+import './Frontpage.css';
+import './Actor.jsx';
 
-const App = () => {
+const Frontpage = () => {
     const [inputValue, setInputValue] = useState('');
     const [userData, setUserData] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
@@ -53,10 +55,19 @@ const App = () => {
     };
 
     return (
-        <div >
+        <div>
             <div className="headstyle">
                 <h1 className="titletext">IMDB</h1>
+                {/* Dropdown menu */}
+                <div className="dropdown">
+                    <button className="dropbtn">Menu</button>
+                    <div className="dropdown-content">
+                        <Link to="/actor">Actor Page</Link>
+                        <Link to="/change to page name"> put in new Page</Link>
+                    </div>
+                </div>
             </div>
+
             <div className="containerStyle">
                 <label htmlFor="userId" className="input-label">Enter User ID:</label>
                 <input
@@ -99,4 +110,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default Frontpage;

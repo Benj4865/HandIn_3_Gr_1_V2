@@ -1,0 +1,124 @@
+/* Ensure the body takes up the full height */
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Header style - IMDB */
+.headstyle {
+  width: 100%;
+  height: 80px; /* Fixed height for the header */
+  background-color: #2e2a2a; /* Black background */
+  position: fixed; /* Fixed at the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it stays above other content */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  position: relative;
+  padding: 0 10px; /* Add some padding to avoid overflow */
+}
+
+/* Title text style */
+.titletext {
+  font-size: 5vw; /* Use viewport width for scaling */
+  color: seagreen;
+  margin: 0;
+  position: absolute; /* Position title centrally */
+  text-align: center;
+}
+
+/* Dropdown menu - positioned left */
+.dropdown {
+  position: absolute; /* Position it absolutely */
+  top: 50%; /* Position vertically in the center of the header */
+  left: 10px; /* Align to the left */
+  transform: translateY(-50%); /* Adjust for perfect vertical centering */
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+/* Button to open dropdown */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+/* Change color on hover */
+.dropbtn:hover {
+  background-color: #45a049;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+}
+
+/* Change color when hovering over a link */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown content when hovering over the button */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Main content area */
+.containerStyle {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 3vw; /* Scaling input and button */
+  font-family: "serif";
+  margin-top: 100px; /* Add space below header */
+  padding: 10px;
+}
+
+.input-field {
+  padding: 8px;
+  font-size: 2rem; /* Slightly larger font size */
+  width: 50%; /* Adjust input width */
+}
+
+.buttonStyle {
+  background-color: darkgray;
+  color: black;
+  padding: 0 15px;
+  margin-left: 10px;
+}
+
+.maincontent {
+  margin-top: 150px; /* Ensure content is pushed down */
+  text-align: center;
+  font-size: 2rem;
+  padding: 10px;
+}
+
+.error-message {
+  color: red;
+  font-size: 1.5rem;
+}
