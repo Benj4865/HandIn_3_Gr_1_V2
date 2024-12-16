@@ -1,7 +1,7 @@
 // Import necessary dependencies
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
-import './Actor.css'; // Actor page styles
+import './User.css'; // Actor page styles
 
 const Actor = () => {
     return (
