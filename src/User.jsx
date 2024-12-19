@@ -3,7 +3,7 @@ import './User.css';
 
 import user_icon from '../img/user.png';
 import email_icon from '../img/email.png';
-import password_icon from '../img/password.jpg';
+import password_icon from '../img/password.png';
 
 const LoginSignup = () => {
 	const [action, setAction] = useState("Login");
