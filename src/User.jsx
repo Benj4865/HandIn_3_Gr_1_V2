@@ -1,21 +1,62 @@
-// Import necessary dependencies
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import './User.css'; // Actor page styles
+import React, { useState } from 'react';
 
-const Actor = () => {
+const TestCreateUser = () => {
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userPassword, setUserPassword] = useState('');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('https://localhost:7126/api/users/createuser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userName,
+                    userEmail,
+                    userPassword,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            setMessage(User created: ${data.userName});
+        } catch (error) {
+            console.error('Error:', error);
+            setMessage('Failed to create user.');
+        }
+    };
+
     return (
-        <div className="containerStyle">
-            <h1>Actor Page</h1>
-
-            <p>Show content here.</p>
-
-            {/* Navigation link to the Frontpage */}
-            <div className="navigation-link">
-                <Link to="/">Go to Front Page</Link>
-            </div>
+        <div>
+            <input
+                type="text"
+                placeholder="Username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+            />
+            <input
+                type="email"
+                placeholder="Email"
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={userPassword}
+                onChange={(e) => setUserPassword(e.target.value)}
+            />
+            <button onClick={handleSubmit}>Create User</button>
+            <p>{message}</p>
         </div>
     );
 };
 
-export default Actor;
+export default TestCreateUser;
+localhost

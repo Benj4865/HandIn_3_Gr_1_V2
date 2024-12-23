@@ -10,6 +10,7 @@ createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<Frontpage />} /> {/* Root renders Frontpage */}
                 <Route path="/actor" element={<Actor />} /> {/* /actor renders Actor */}
+                <Route path="/frontpage" element={<Frontpage />} />
             </Routes>
         </Router>
     </React.StrictMode>
