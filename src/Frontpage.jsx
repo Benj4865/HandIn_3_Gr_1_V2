@@ -61,7 +61,8 @@ const Frontpage = () => {
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
                         <Link to="/actor">Actor Page</Link>
-                        <Link to="/newpage">New Page</Link>
+                        <Link to="/user">User</Link>
+                        <Link to="/nothing">New Page</Link>
                     </div>
                 </div>
             </div>
