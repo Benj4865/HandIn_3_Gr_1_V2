@@ -51,13 +51,6 @@ const TestCreateUser = () => {
             // Log the response data for debugging
             console.log("Received response:", data);
 
-            // Check if the response has a message field
-            if (data && data.message) {
-                setMessage(`User created: ${data.message}`);
-            } else {
-                setMessage('User created successfully, but no message provided.');
-            }
-
         } catch (error) {
             // Log the error and set a failure message
             console.error('Error:', error);
