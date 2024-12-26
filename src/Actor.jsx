@@ -4,13 +4,13 @@ import './Actor.css';
 
 const Actor = () => {
     const [inputValue, setInputValue] = useState('');
-    const [personList, setPersonList] = useState([]); // Full list from API
+    const [personList, setPersonList] = useState([]);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-    const itemsPerPage = 5; // Only display 5 names at a time
+    const itemsPerPage = 5;
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -21,7 +21,7 @@ const Actor = () => {
             setErrorMessage('Input cannot be blank.');
             setPersonList([]);
             setSelectedPerson(null);
-            setCurrentPage(1); // Reset page to avoid confusion
+            setCurrentPage(1);
             return;
         }
 
@@ -29,7 +29,7 @@ const Actor = () => {
         setErrorMessage('');
         setPersonList([]);
         setSelectedPerson(null);
-        setCurrentPage(1); // Reset to the first page after a new search
+        setCurrentPage(1);
 
         try {
             const apiUrl = `https://localhost:7126/api/person/searchbyname/${inputValue}`;
@@ -49,7 +49,7 @@ const Actor = () => {
                 throw new Error('No data found.');
             }
 
-            setPersonList(data.people); // Assume "people" is the array
+            setPersonList(data.people);
             setInputValue('');
         } catch (error) {
             console.error('Error communicating with backend:', error);
@@ -71,19 +71,18 @@ const Actor = () => {
 
     const handleNextPage = () => {
         if (currentPage * itemsPerPage < personList.length) {
-            setSelectedPerson(null); // Clear selected person if navigating
+            setSelectedPerson(null);
             setCurrentPage((prevPage) => prevPage + 1);
         }
     };
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {
-            setSelectedPerson(null); // Clear selected person if navigating
+            setSelectedPerson(null);
             setCurrentPage((prevPage) => prevPage - 1);
         }
     };
 
-    // Compute the exact 5 people to display on the current page
     const currentList = personList.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
