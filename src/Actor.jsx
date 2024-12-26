@@ -4,10 +4,13 @@ import './Actor.css';
 
 const Actor = () => {
     const [inputValue, setInputValue] = useState('');
-    const [personList, setPersonList] = useState([]);
+    const [personList, setPersonList] = useState([]); // Full list from API
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const itemsPerPage = 5; // Only display 5 names at a time
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -18,6 +21,7 @@ const Actor = () => {
             setErrorMessage('Input cannot be blank.');
             setPersonList([]);
             setSelectedPerson(null);
+            setCurrentPage(1); // Reset page to avoid confusion
             return;
         }
 
@@ -25,6 +29,7 @@ const Actor = () => {
         setErrorMessage('');
         setPersonList([]);
         setSelectedPerson(null);
+        setCurrentPage(1); // Reset to the first page after a new search
 
         try {
             const apiUrl = `https://localhost:7126/api/person/searchbyname/${inputValue}`;
@@ -44,20 +49,10 @@ const Actor = () => {
                 throw new Error('No data found.');
             }
 
-            setPersonList(data.people); // We are assuming "people" is the array we need.
+            setPersonList(data.people); // Assume "people" is the array
             setInputValue('');
         } catch (error) {
             console.error('Error communicating with backend:', error);
-
-            // Enhanced error logging for different types of errors
-            if (error.response) {
-                console.error('Error response:', error.response);
-            } else if (error.message) {
-                console.error('Error message:', error.message);
-            } else {
-                console.error('Unknown error:', error);
-            }
-
             setErrorMessage('Error communicating with backend. Please try again later.');
         } finally {
             setIsLoading(false);
@@ -73,6 +68,26 @@ const Actor = () => {
     const handlePersonClick = (person) => {
         setSelectedPerson(person);
     };
+
+    const handleNextPage = () => {
+        if (currentPage * itemsPerPage < personList.length) {
+            setSelectedPerson(null); // Clear selected person if navigating
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setSelectedPerson(null); // Clear selected person if navigating
+            setCurrentPage((prevPage) => prevPage - 1);
+        }
+    };
+
+    // Compute the exact 5 people to display on the current page
+    const currentList = personList.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
     return (
         <div>
@@ -114,20 +129,35 @@ const Actor = () => {
                 </div>
             )}
 
-            {personList.length > 0 && (
+            {personList.length > 0 && !selectedPerson && (
                 <div className="person-list">
                     <h2>Search Results:</h2>
                     <ul>
-                        {personList.map((person) => (
+                        {currentList.map((person) => (
                             <li
                                 key={person.nconst}
                                 onClick={() => handlePersonClick(person)}
                                 className="person-list-item"
                             >
-                                {person.primaryname} ({person.birthyear?.trim() || 'N/A'} - {person.deathyear?.trim() || 'N/A'})
+                                {person.primaryname}
                             </li>
                         ))}
                     </ul>
+                    <div className="pagination-controls">
+                        <button
+                            onClick={handlePreviousPage}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        <span>Page {currentPage} of {Math.ceil(personList.length / itemsPerPage)}</span>
+                        <button
+                            onClick={handleNextPage}
+                            disabled={currentPage * itemsPerPage >= personList.length}
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             )}
 
@@ -135,10 +165,7 @@ const Actor = () => {
                 <main className="maincontent">
                     <div className="person-info">
                         <h2>Person Details:</h2>
-                        <p><strong>Nconst:</strong> {selectedPerson.nconst}</p>
                         <p><strong>Name:</strong> {selectedPerson.primaryname}</p>
-                        <p><strong>Birth Year:</strong> {selectedPerson.birthyear?.trim() || 'N/A'}</p>
-                        <p><strong>Death Year:</strong> {selectedPerson.deathyear?.trim() || 'N/A'}</p>
                         <p>
                             <strong>Primary Professions:</strong>{' '}
                             {selectedPerson.primaryprofessions
@@ -146,6 +173,7 @@ const Actor = () => {
                                 .join(', ')}
                         </p>
                         <p><strong>Known For:</strong> {selectedPerson.knownFor || 'N/A'}</p>
+                        <button onClick={() => setSelectedPerson(null)}>Back to List</button>
                     </div>
                 </main>
             )}
