@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Frontpage from './Frontpage.jsx';
 import Actor from './Actor.jsx';
 import User from "./User.jsx";
+import DeleteUser from "./DeleteUser.jsx";
 
 
 createRoot(document.getElementById('root')).render(
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/" element={<Frontpage />} /> {/* Root route */}
                 <Route path="/actor" element={<Actor />} />
                 <Route path="/user" element={<User />} />
+                <Route path="/DeleteUser" element={<DeleteUser />} />
             </Routes>
         </Router>
     </React.StrictMode>
