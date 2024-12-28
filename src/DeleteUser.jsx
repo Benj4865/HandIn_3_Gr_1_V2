@@ -11,7 +11,7 @@ const DeleteUser = () => {
         e.preventDefault();
 
         if (!userID || !userPassword) {
-            setStatusMessage("Both UserID and Password are required.");
+            setStatusMessage("Both UserID and Password are required to delete an user.");
             return;
         }
 
@@ -30,7 +30,7 @@ const DeleteUser = () => {
                 setUserPassword("");
             } else {
                 const errorData = await response.json();
-                setStatusMessage(errorData.message || "Failed to delete user.");
+                setStatusMessage(errorData.message || "Something went wrong, failed to delete user.");
             }
         } catch (error) {
             setStatusMessage("An error occurred. Please try again later.");
