@@ -12,6 +12,7 @@ import ChangePerson from './UpdatePerson.jsx';
 import ChangeUser from './UpdateUser.jsx';
 import DeleteTitle from "./DeleteTitle.jsx";
 import UpdateTitle from "./UpdateTitle.jsx";
+import TitleCreate from "./TitleCreate.jsx";
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
@@ -29,6 +30,7 @@ if (rootElement) {
                     <Route path="/ChangeUser" element={<ChangeUser />} />
                     <Route path="/DeleteTitle" element={<DeleteTitle />}/>
                     <Route path="/UpdateTitle" element={<UpdateTitle />}/>
+                    <Route path="/TitleCreate" element={<TitleCreate />}/>
                 </Routes>
             </Router>
         </React.StrictMode>
