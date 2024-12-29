@@ -1,0 +1,40 @@
+.input-field {
+    width: 100%; /* Full width for input field */
+    max-width: 400px; /* Limit maximum width */
+    padding: 10px; /* Padding for better spacing */
+    font-size: 16px; /* Readable font size */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded corners */
+    outline: none; /* No outline on focus */
+    margin-bottom: 10px; /* Space below input */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.input-field:focus {
+    border-color: #007bff; /* Highlight with primary color */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect */
+}
+
+/* Styling for the submit button */
+.buttonStyle {
+    background-color: #007bff; /* Primary blue background */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners */
+    padding: 10px 20px; /* Spacing inside the button */
+    font-size: 16px; /* Readable font size */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.buttonStyle:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge */
+}
+
+.buttonStyle:disabled {
+    background-color: grey; /* Grey background */
+    cursor: not-allowed; /* Show not-allowed cursor */
+    opacity: 0.7; /* Slight transparency */
+}

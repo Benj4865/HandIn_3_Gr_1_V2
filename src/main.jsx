@@ -5,6 +5,7 @@ import Frontpage from './Frontpage.jsx';
 import Actor from './Actor.jsx';
 import User from "./User.jsx";
 import DeleteUser from "./DeleteUser.jsx";
+import Title from "./Title.jsx";
 
 
 createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/actor" element={<Actor />} />
                 <Route path="/user" element={<User />} />
                 <Route path="/DeleteUser" element={<DeleteUser />} />
+                <Route path="/Title" element={<Title />} />
             </Routes>
         </Router>
     </React.StrictMode>
