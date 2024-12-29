@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importing components
 import Frontpage from './Frontpage';
-import Actor from './Actor';
-import User from './User';
+import ReadActor from './ReadActor.jsx';
+import User from './CreateUser.jsx';
 import DeleteUser from './DeleteUser';
 import Title from './Title';
-import ChangePerson from './ChangePerson';
-import ChangeUser from './ChangeUser';
+import ChangePerson from './UpdatePerson.jsx';
+import ChangeUser from './UpdateUser.jsx';
 import DeleteTitle from "./DeleteTitle.jsx";
 import UpdateTitle from "./UpdateTitle.jsx";
 
@@ -21,7 +21,7 @@ if (rootElement) {
                 <Routes>
                     <Route path="/" element={<Frontpage />} /> {/* Root route */}
                     <Route path="/Frontpage" element={<Frontpage />} />
-                    <Route path="/actor" element={<Actor />} />
+                    <Route path="/actor" element={<ReadActor />} />
                     <Route path="/user" element={<User />} />
                     <Route path="/DeleteUser" element={<DeleteUser />} />
                     <Route path="/Title" element={<Title />} />

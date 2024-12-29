@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Actor.css';
 
-const Actor = () => {
+const ReadActor = () => {
     const [inputValue, setInputValue] = useState('');
     const [personList, setPersonList] = useState([]);
     const [selectedPerson, setSelectedPerson] = useState(null);
@@ -185,4 +185,4 @@ const Actor = () => {
     );
 };
 
-export default Actor;
+export default ReadActor;
