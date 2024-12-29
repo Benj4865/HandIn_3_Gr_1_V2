@@ -47,7 +47,7 @@ const DeleteUser = () => {
                         <Link to="/Frontpage">Frontpage</Link>
                         <Link to="/actor">Actor Page</Link>
                         <Link to="/user">User</Link>
-                        <Link to="ChnageUser">ChangeUser</Link>
+                        <Link to="/ChangeUser">ChangeUser</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/Title">Title</Link>
                         <Link to="/DeleteTitle">DeleteTitle</Link>

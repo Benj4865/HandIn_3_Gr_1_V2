@@ -67,7 +67,7 @@ const TestCreateUser = () => {
                     <div className="dropdown-content">
                         <Link to="/Frontpage">Frontpage</Link>
                         <Link to="/actor">Actor Page</Link>
-                        <Link to="ChnageUser">ChangeUser</Link>
+                        <Link to="/ChangeUser">ChangeUser</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
                         <Link to="/Title">Title</Link>
