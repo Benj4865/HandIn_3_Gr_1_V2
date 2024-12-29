@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Make sure to import Link from 'react-router-dom' if you're using React Router for navigation
+import './TitleCreate.css';
 
 function CreateTitle() {
     // State for each input field
@@ -19,7 +20,6 @@ function CreateTitle() {
 
     const [message, setMessage] = useState('');
 
-    // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -28,11 +28,9 @@ function CreateTitle() {
         }));
     };
 
-    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Preparing the request body
         const requestBody = {
             tconst: formData.tconst,
             titleType: formData.titleType,
