@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const UpdatePerson = () => {
     const [nconst, setNconst] = useState('');
@@ -14,8 +14,6 @@ const UpdatePerson = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const navigate = useNavigate();
 
     // Fetch person data based on nconst
     useEffect(() => {
@@ -51,38 +49,46 @@ const UpdatePerson = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Prepare the data to send in the request, setting empty fields to null
+        // Check if required fields are filled
+        if (!nconst || !personData.primaryname || !personData.birthyear || !personData.deathyear) {
+            setError('Please fill all required fields');
+            return;
+        }
+
+        // Prepare the data to send in the request
         const dataToUpdate = {
-            nconst,
-            primaryname: personData.primaryname || null, // If empty, set to null
-            birthyear: personData.birthyear || null,
-            deathyear: personData.deathyear || null,
-            primaryprofessions: personData.primaryprofessions || null,
-            knownfor: personData.knownfor || null,
+            Nconst: nconst || null,
+            Primaryname: personData.primaryname || null,
+            Birthyear: personData.birthyear || null,
+            Deathyear: personData.deathyear || null,
+            UpdatePrimaryprofession: personData.primaryprofessions || null,
+            UpdateKnownFor: personData.knownfor || null,
         };
 
-        // Log the request payload for debugging
         console.log('Request Payload:', JSON.stringify(dataToUpdate));
 
+        // Build query string
+        const queryString = new URLSearchParams(dataToUpdate).toString();
+
         try {
-            const response = await fetch('https://localhost:7126/api/person/updateperson', {
-                method: 'PUT', // Use PUT if updating an existing record
+            const response = await fetch(`https://localhost:7126/api/person/updateperson?${queryString}`, {
+                method: 'POST', // Use POST or PUT as required by your API
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dataToUpdate),
             });
 
             if (response.ok) {
                 setMessage('Person updated successfully!');
                 setError('');
-                navigate('/actor');
+
+                // Refresh the page after successful update
+                window.location.reload();
             } else {
-                // Log response status and text for debugging
                 const errorDetails = await response.text();
-                console.error('Error Details:', errorDetails); // Log detailed error
-                throw new Error(`Failed to update person: ${errorDetails}`);
+                console.error('Error Details:', errorDetails);
+                setError(`Failed to update person: ${errorDetails}`);
             }
         } catch (err) {
-            console.error('Request Error:', err); // Log the error object for debugging
+            console.error('Request Error:', err);
             setError(err.message);
         }
     };
