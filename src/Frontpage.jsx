@@ -33,7 +33,7 @@ const Frontpage = () => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
             const data = await response.json();
@@ -62,9 +62,9 @@ const Frontpage = () => {
                     <div className="dropdown-content">
                         <Link to="/actor">Actor Page</Link>
                         <Link to="/user">User</Link>
-                        <Link to="/ChangePerson">ChangePerson</Link>
+                        <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/nothing">New Page</Link>
-                        <Link to="/DeleteUser">DeleteUser</Link>
+                        <Link to="/DeleteUser">Delete User</Link>
                         <Link to="/Title">Title</Link>
                     </div>
                 </div>

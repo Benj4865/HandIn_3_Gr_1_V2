@@ -17,7 +17,8 @@ if (rootElement) {
         <React.StrictMode>
             <Router>
                 <Routes>
-                    <Route path="/Frontpage" element={<Frontpage />} /> {/* Root route */}
+                    <Route path="/" element={<Frontpage />} /> {/* Root route */}
+                    <Route path="/Frontpage" element={<Frontpage />} />
                     <Route path="/actor" element={<Actor />} />
                     <Route path="/user" element={<User />} />
                     <Route path="/DeleteUser" element={<DeleteUser />} />

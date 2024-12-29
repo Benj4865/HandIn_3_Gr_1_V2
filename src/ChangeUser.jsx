@@ -94,7 +94,7 @@ const UpdateUser = () => {
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
-                        <Link to="/frontpage">Frontpage</Link>
+                        <Link to="/Frontpage">Frontpage</Link>
                         <Link to="/actor">Actor Page</Link>
                         <Link to="/user">User</Link>
                         <Link to="/nothing">New Page</Link>
