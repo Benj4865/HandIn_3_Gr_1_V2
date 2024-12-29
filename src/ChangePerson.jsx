@@ -103,9 +103,10 @@ const UpdatePerson = () => {
                         <Link to="/Frontpage">Frontpage</Link>
                         <Link to="/actor">Actor Page</Link>
                         <Link to="/user">User</Link>
-                        <Link to="/nothing">New Page</Link>
-                        <Link to="/DeleteUser">DeleteUser</Link>
+                        <Link to="ChnageUser">ChangeUser</Link>
+                        <Link to="/DeleteUser">Delete User</Link>
                         <Link to="/Title">Title</Link>
+                        <Link to="/DeleteTitle">DeleteTitle</Link>
                     </div>
                 </div>
             </header>
