@@ -66,6 +66,7 @@ const Frontpage = () => {
                         <Link to="/nothing">New Page</Link>
                         <Link to="/DeleteUser">Delete User</Link>
                         <Link to="/Title">Title</Link>
+                        <Link to="/DeleteTitle">DeleteTitle</Link>
                     </div>
                 </div>
             </div>
