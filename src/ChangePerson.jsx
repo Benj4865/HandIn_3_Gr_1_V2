@@ -14,6 +14,7 @@ const UpdatePerson = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [removeSpaces, setRemoveSpaces] = useState(false); // State for the checkbox
 
     // Fetch person data based on nconst
     useEffect(() => {
@@ -46,6 +47,7 @@ const UpdatePerson = () => {
         setPersonData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    // Remove spaces if checkbox is checked
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -55,14 +57,24 @@ const UpdatePerson = () => {
             return;
         }
 
+        // Remove spaces if checkbox is checked
+        const cleanedData = { ...personData };
+        if (removeSpaces) {
+            for (let key in cleanedData) {
+                if (typeof cleanedData[key] === 'string') {
+                    cleanedData[key] = cleanedData[key].trim().replace(/\s+/g, ' ');
+                }
+            }
+        }
+
         // Prepare the data to send in the request
         const dataToUpdate = {
             Nconst: nconst || null,
-            Primaryname: personData.primaryname || null,
-            Birthyear: personData.birthyear || null,
-            Deathyear: personData.deathyear || null,
-            UpdatePrimaryprofession: personData.primaryprofessions || null,
-            UpdateKnownFor: personData.knownfor || null,
+            Primaryname: cleanedData.primaryname || null,
+            Birthyear: cleanedData.birthyear || null,
+            Deathyear: cleanedData.deathyear || null,
+            UpdatePrimaryprofession: cleanedData.primaryprofessions || null,
+            UpdateKnownFor: cleanedData.knownfor || null,
         };
 
         console.log('Request Payload:', JSON.stringify(dataToUpdate));
@@ -182,6 +194,18 @@ const UpdatePerson = () => {
                         </button>
                     </form>
                 )}
+
+
+                <div className="checkbox-container" style={{marginTop: '20px', textAlign: 'right'}}>
+                    <input
+                        type="checkbox"
+                        id="removeSpaces"
+                        checked={removeSpaces}
+                        onChange={() => setRemoveSpaces(!removeSpaces)}
+                    />
+                    <label htmlFor="removeSpaces" style={{color: 'red'}}>Remove spaces before updating</label>
+                </div>
+
 
                 {message && <div className="success-message">{message}</div>}
                 {error && <div className="error-message">{error}</div>}
