@@ -6,6 +6,7 @@ import Actor from './Actor.jsx';
 import User from "./User.jsx";
 import DeleteUser from "./DeleteUser.jsx";
 import Title from "./Title.jsx";
+import ChangePerson from "./ChangePerson.jsx";
 
 
 createRoot(document.getElementById('root')).render(
@@ -17,6 +18,9 @@ createRoot(document.getElementById('root')).render(
                 <Route path="/user" element={<User />} />
                 <Route path="/DeleteUser" element={<DeleteUser />} />
                 <Route path="/Title" element={<Title />} />
+                <Route path="/ChangePerson" element={<ChangePerson />} />
+
+
             </Routes>
         </Router>
     </React.StrictMode>

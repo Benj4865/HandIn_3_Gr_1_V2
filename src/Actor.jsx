@@ -96,7 +96,11 @@ const Actor = () => {
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
                         <Link to="/frontpage">Frontpage</Link>
+                        <Link to="/user">User</Link>
                         <Link to="/ChangePerson">ChangePerson</Link>
+                        <Link to="/nothing">New Page</Link>
+                        <Link to="/DeleteUser">DeleteUser</Link>
+                        <Link to="/Title">Title</Link>
                     </div>
                 </div>
             </div>

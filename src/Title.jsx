@@ -123,7 +123,11 @@ const Title = () => {
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
                         <Link to="/frontpage">Frontpage</Link>
-                        <Link to="/ChangeTitle">ChangeTitle</Link>
+                        <Link to="/actor">Actor Page</Link>
+                        <Link to="/user">User</Link>
+                        <Link to="/ChangePerson">ChangePerson</Link>
+                        <Link to="/nothing">New Page</Link>
+                        <Link to="/DeleteUser">DeleteUser</Link>
                     </div>
                 </div>
             </div>
