@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Make sure to import Link from 'react-router-dom' if you're using React Router for navigation
-import './TitleCreate.css';
+
 
 function CreateTitle() {
     // State for each input field
