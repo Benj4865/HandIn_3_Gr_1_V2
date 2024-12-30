@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './DeleteTitle.css';
 
 const DeleteTitle = () => {
@@ -10,8 +9,12 @@ const DeleteTitle = () => {
 
     const handleFetchTitle = async () => {
         try {
-            const response = await axios.get(`https://localhost:7126/api/title/${tconst}`);
-            setTitle(response.data);
+            const response = await fetch(`https://localhost:7126/api/title/${tconst}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch title');
+            }
+            const data = await response.json();
+            setTitle(data);
             setMessage('');
         } catch (error) {
             setTitle(null);
@@ -21,7 +24,16 @@ const DeleteTitle = () => {
 
     const handleDeleteTitle = async () => {
         try {
-            await axios.post('https://localhost:7126/api/title/deletetitle', { tconst });
+            const response = await fetch('https://localhost:7126/api/title/deletetitle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ tconst }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete title');
+            }
             setMessage('Title successfully deleted.');
             setTitle(null);
             setTconst('');
@@ -80,4 +92,3 @@ const DeleteTitle = () => {
 };
 
 export default DeleteTitle;
-
