@@ -71,6 +71,7 @@ const Frontpage = () => {
                         <Link to="/CreateTitle">CreateTitle</Link>
                         <Link to="/CreatePerson">Creatperson</Link>
                         <Link to="/DeletePerson">Deleteperson</Link>
+                        <Link to="/ReadUser">ReadUser</Link>
                     </div>
                 </div>
             </div>

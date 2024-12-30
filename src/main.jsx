@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Importing components
 import Frontpage from './Frontpage';
 import ReadActor from './ReadActor.jsx';
+import ReadUser from "./ReadUser.jsx";
 import CreateUser from './CreateUser.jsx';
 import DeleteUser from './DeleteUser';
 import Title from './Title';
@@ -35,6 +36,7 @@ if (rootElement) {
                     <Route path="/CreateTitle" element={<CreateTitle />}/>
                     <Route path="/CreatePerson" element={<CreatePerson />}/>
                     <Route path="/DeletePerson" element={<DeletePerson />}/>
+                    <Route path="/ReadUser" element={<ReadUser/>}/>
                 </Routes>
             </Router>
         </React.StrictMode>
