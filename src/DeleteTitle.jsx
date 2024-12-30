@@ -1,153 +1,39 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './DeleteTitle.css';
 
-const DeleteTitle
-    = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [titleList, setTitleList] = useState([]);
-    const [selectedTitle, setSelectedTitle] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
+const DeleteTitle = () => {
+    const [tconst, setTconst] = useState('');
+    const [title, setTitle] = useState(null);
     const [message, setMessage] = useState('');
 
-    const itemsPerPage = 5;
-
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleButtonClick = async () => {
-        if (!inputValue.trim()) {
-            setErrorMessage('Input cannot be blank.');
-            setTitleList([]);
-            setSelectedTitle(null);
-            setCurrentPage(1);
-            return;
-        }
-
-        setIsLoading(true);
-        setErrorMessage('');
-        setTitleList([]);
-        setSelectedTitle(null);
-        setCurrentPage(1);
-
+    const handleFetchTitle = async () => {
         try {
-            const apiUrl = `https://localhost:7126/api/title/searchtitlebyname?name=${encodeURIComponent(inputValue)}`;
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            if (!data || !data.titles || data.titles.length === 0) {
-                throw new Error('No titles found.');
-            }
-
-            setTitleList(data.titles);
-            setInputValue('');
+            const response = await axios.get(`https://localhost:7126/api/title/${tconst}`);
+            setTitle(response.data);
+            setMessage('');
         } catch (error) {
-            console.error('Error communicating with backend:', error);
-            setErrorMessage('Error communicating with backend. Please try again later.');
-        } finally {
-            setIsLoading(false);
+            setTitle(null);
+            setMessage('Error fetching title. Please check the tconst.');
         }
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleButtonClick();
-        }
-    };
-
-    const handleTitleClick = async (title) => {
-        setIsLoading(true);
-        setErrorMessage('');
-
+    const handleDeleteTitle = async () => {
         try {
-            const apiUrl = `https://localhost:7126/api/title/${title.tconst}`;
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            if (!data) {
-                throw new Error('No title details found.');
-            }
-
-            setSelectedTitle(data);
+            await axios.post('https://localhost:7126/api/title/deletetitle', { tconst });
+            setMessage('Title successfully deleted.');
+            setTitle(null);
+            setTconst('');
         } catch (error) {
-            console.error('Error fetching title details:', error);
-            setErrorMessage('Error fetching title details. Please try again later.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleNextPage = () => {
-        if (currentPage * itemsPerPage < titleList.length) {
-            setSelectedTitle(null);
-            setCurrentPage((prevPage) => prevPage + 1);
-        }
-    };
-
-    const handlePreviousPage = () => {
-        if (currentPage > 1) {
-            setSelectedTitle(null);
-            setCurrentPage((prevPage) => prevPage - 1);
-        }
-    };
-
-    const deleteTitle = async () => {
-        if (!selectedTitle) {
-            setMessage('No title selected to delete.');
-            return;
-        }
-
-        setIsLoading(true);
-        setMessage('');
-        try {
-            const response = await fetch('https://localhost:7126/api/title/deletetitle', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(selectedTitle),
-            });
-
-            if (!response.ok) {
-                throw new Error('Error deleting title. Please try again.');
-            }
-
-            setMessage('Title deleted successfully.');
-            setTitleList((prevList) => prevList.filter((title) => title.tconst !== selectedTitle.tconst));
-            setSelectedTitle(null);
-        } catch (error) {
-            console.error('Error deleting title:', error);
             setMessage('Error deleting title. Please try again.');
-        } finally {
-            setIsLoading(false);
         }
     };
 
-    const currentList = titleList.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleFetchTitle();
+    };
 
     return (
         <div>
@@ -167,91 +53,31 @@ const DeleteTitle
                 </div>
             </div>
 
-            <div className="containerStyle">
-                <label htmlFor="title" className="input-label">Find Title:</label>
+            <form onSubmit={handleSubmit} className="form-style">
+                <label htmlFor="tconst">Enter tconst:</label>
                 <input
-                    name="title"
                     type="text"
-                    placeholder="Enter title name"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyPress}
+                    id="tconst"
+                    value={tconst}
+                    onChange={(e) => setTconst(e.target.value)}
                     className="input-field"
-                    disabled={isLoading}
                 />
-                <button
-                    className="buttonStyle"
-                    onClick={handleButtonClick}
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Submit'}
-                </button>
-            </div>
+                <button type="submit" className="submit-button">Fetch Title</button>
+            </form>
 
-            {errorMessage && (
-                <div className="error-message">
-                    <strong>Error:</strong> {errorMessage}
+            {title && (
+                <div>
+                    <h2>Title Details:</h2>
+                    <p><strong>Name:</strong> {title.name}</p>
+                    <p><strong>Year:</strong> {title.year}</p>
+                    <button onClick={handleDeleteTitle} className="delete-button">Delete Title</button>
                 </div>
             )}
 
-            {message && (
-                <div className="success-message">
-                    <strong>{message}</strong>
-                </div>
-            )}
-
-            {titleList.length > 0 && !selectedTitle && (
-                <div className="title-list">
-                    <h2>Search Results:</h2>
-                    <ul>
-                        {currentList.map((title) => (
-                            <li
-                                key={title.tconst}
-                                onClick={() => handleTitleClick(title)}
-                                className="title-list-item"
-                            >
-                                {title.primaryTitle}
-                            </li>
-                        ))}
-                    </ul>
-                    <div className="pagination-controls">
-                        <button
-                            onClick={handlePreviousPage}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </button>
-                        <span>Page {currentPage} of {Math.ceil(titleList.length / itemsPerPage)}</span>
-                        <button
-                            onClick={handleNextPage}
-                            disabled={currentPage * itemsPerPage >= titleList.length}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {selectedTitle && (
-                <main className="maincontent">
-                    <div className="title-info">
-                        <h2>Title Details:</h2>
-                        <p><strong>Title:</strong> {selectedTitle.primaryTitle}</p>
-                        <p><strong>Year:</strong> {selectedTitle.startYear || 'N/A'}</p>
-                        <p><strong>Genres:</strong> {selectedTitle.genres?.join(', ') || 'N/A'}</p>
-                        <button onClick={() => setSelectedTitle(null)}>Back to List</button>
-                        <button
-                            onClick={deleteTitle}
-                            disabled={isLoading}
-                            className="delete-button"
-                        >
-                            {isLoading ? 'Deleting...' : 'Delete Title'}
-                        </button>
-                    </div>
-                </main>
-            )}
+            {message && <p>{message}</p>}
         </div>
     );
 };
 
 export default DeleteTitle;
+
