@@ -6,13 +6,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Frontpage from './Frontpage';
 import ReadActor from './ReadActor.jsx';
 import User from './CreateUser.jsx';
-import DeleteUser from './DeleteUser';
-import Title from './Title';
+import DeleteUser from './DeleteUser.jsx';
+import Title from './Title.jsx';
 import ChangePerson from './UpdatePerson.jsx';
 import ChangeUser from './UpdateUser.jsx';
 import DeleteTitle from "./DeleteTitle.jsx";
-import UpdateTitle from "./UpdateTitle.jsx";
 import CreateTitle from "./CreateTitle.jsx";
+import UpdateTitle from "./UpdateTitle.jsx";
 import CreatePerson from "./CreatePerson.jsx";
 
 const rootElement = document.getElementById('root');
