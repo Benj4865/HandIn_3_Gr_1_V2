@@ -61,7 +61,7 @@ const Frontpage = () => {
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
                         <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
+                        <Link to="/CreateUser">Create User</Link>
                         <Link to="/ChangeUser">ChangeUser</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
@@ -70,6 +70,7 @@ const Frontpage = () => {
                         <Link to="/UpdateTitle">UpdateTitle</Link>
                         <Link to="/CreateTitle">CreateTitle</Link>
                         <Link to="/CreatePerson">Creatperson</Link>
+                        <Link to="/DeletePerson">Deleteperson</Link>
                     </div>
                 </div>
             </div>

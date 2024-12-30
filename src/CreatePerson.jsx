@@ -1,110 +1,76 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const CreatePerson = () => {
-    const [formData, setFormData] = useState({
-        nconst: '',
-        primaryName: '',
-        birthYear: '',
-        deathYear: '',
-        primaryProfessions: [{ professionName: '' }],
-        knownFor: []
-    });
+const TestCreatePerson = () => {
+    const [primaryName, setPrimaryName] = useState('');
+    const [birthYear, setBirthYear] = useState('');
+    const [deathYear, setDeathYear] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    // Handle changes in input fields
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        if (name === 'professionName') {
-            setFormData((prevData) => {
-                const updatedProfessions = [...prevData.primaryProfessions];
-                updatedProfessions[index] = { professionName: value };
-                return { ...prevData, primaryProfessions: updatedProfessions };
-            });
-        } else {
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: value
-            }));
-        }
-    };
-
-    // Add a new profession input field
-    const handleAddProfession = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            primaryProfessions: [...prevData.primaryProfessions, { professionName: '' }]
-        }));
-    };
-
-    // Remove a profession input field
-    const handleRemoveProfession = (index) => {
-        const updatedProfessions = formData.primaryProfessions.filter((_, i) => i !== index);
-        setFormData((prevData) => ({ ...prevData, primaryProfessions: updatedProfessions }));
-    };
-
-    // Handle the form submission
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent form submission reload
 
-        // Validate all fields before sending the request
-        if (!formData.nconst || !formData.primaryName || !formData.birthYear || !formData.deathYear || !formData.primaryProfessions.length || !formData.knownFor.length) {
-            setMessage("Please fill in all required fields.");
+        // Client-side validation
+        if (!primaryName) {
+            setMessage("The Primaryname field is required.");
             return;
         }
 
-        // Ensure the 'knownFor' field is an array of objects with 'titleId' as key
-        const knownForTitles = formData.knownFor.map((title) => ({
-            titleId: title.trim() // Clean up any extra spaces
-        }));
+        if (!birthYear) {
+            setMessage("The Birthyear field is required.");
+            return;
+        }
 
-        // Construct the request body
-        const requestBody = {
-            newPerson: {
-                nconst: formData.nconst,
-                primaryname: formData.primaryName,
-                birthyear: formData.birthYear,
-                deathyear: formData.deathYear,
-                primaryprofessions: formData.primaryProfessions.map((profession) => ({
-                    professionName: profession.professionName
-                })),
-                knownFor: knownForTitles
-            }
-        };
+        if (!deathYear) {
+            setMessage("The Deathyear field is required.");
+            return;
+        }
+
+        // Construct the URL with query parameters
+        const url = `https://localhost:7126/api/person/createperson?PrimaryName=${primaryName}&BirthYear=${birthYear}&DeathYear=${deathYear}`;
+
+        console.log("Sending request to:", url);  // Log the URL for debugging
+
+        setLoading(true);  // Start loading
 
         try {
-            const response = await fetch('https://localhost:7126/api/person/createperson', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method: 'POST', // Use POST method to create a resource
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Accept': '*/*',  // Set the appropriate headers
                 },
-                body: JSON.stringify(requestBody)
+                body: '', // Send an empty body (as done in the curl example)
             });
 
+            // Check if the response is successful
             if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Error Response Body:', errorText);
-                setMessage(`Failed to create person. Error: ${response.status} - ${errorText || 'No detailed error provided by the server.'}`);
-                return;
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            const result = await response.json();
-            setMessage('Person created successfully!');
-            console.log(result); // Log the response or handle as needed
+            // Check for response content type
+            const contentType = response.headers.get('Content-Type');
+            let data = null;
 
-            // Reset form after successful submission
-            setFormData({
-                nconst: '',
-                primaryName: '',
-                birthYear: '',
-                deathYear: '',
-                primaryProfessions: [{ professionName: '' }],
-                knownFor: []
-            });
+            if (contentType && contentType.includes('application/json')) {
+                // If the response is JSON, parse it
+                data = await response.json();
+            } else {
+                // If the response is not JSON, handle it as text
+                const responseText = await response.text();
+                data = responseText;  // Store the raw response text
+            }
 
+            // Log the response data
+            console.log("Received response:", data);
+
+            // Success message
+            setMessage("Successfully created new person!");
         } catch (error) {
             console.error('Error:', error);
-            setMessage(`Error: Unable to create person. ${error.message}`);
+            setMessage(`Failed to create person. Error details: ${error.message}`);
+        } finally {
+            setLoading(false);  // Stop loading
         }
     };
 
@@ -117,10 +83,11 @@ const CreatePerson = () => {
                     <div className="dropdown-content">
                         <Link to="/Frontpage">Frontpage</Link>
                         <Link to="/actor">Actor Page</Link>
+                        <Link to="/ChangeUser">ChangeUser</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
                         <Link to="/Title">Title</Link>
-                        <Link to="/DeleteTitle">Delete Title</Link>
+                        <Link to="/DeleteTitle">DeleteTitle</Link>
                     </div>
                 </div>
             </header>
@@ -129,83 +96,42 @@ const CreatePerson = () => {
                 <form onSubmit={handleSubmit}>
                     <h2>Create Person</h2>
                     <label>
-                        Nconst:
-                        <input
-                            type="text"
-                            name="nconst"
-                            placeholder="Example: nm1234567"
-                            value={formData.nconst}
-                            onChange={(e) => handleInputChange(e)}
-                        />
-                    </label>
-                    <label>
                         Primary Name:
                         <input
                             type="text"
-                            name="primaryName"
-                            value={formData.primaryName}
-                            onChange={(e) => handleInputChange(e)}
+                            placeholder="Primary Name"
+                            value={primaryName}
+                            onChange={(e) => setPrimaryName(e.target.value)}
                         />
                     </label>
                     <label>
                         Birth Year:
                         <input
-                            type="text"
-                            name="birthYear"
-                            value={formData.birthYear}
-                            onChange={(e) => handleInputChange(e)}
+                            type="number"
+                            placeholder="Birth Year"
+                            value={birthYear}
+                            onChange={(e) => setBirthYear(e.target.value)}
                         />
                     </label>
                     <label>
                         Death Year:
                         <input
-                            type="text"
-                            name="deathYear"
-                            value={formData.deathYear}
-                            onChange={(e) => handleInputChange(e)}
+                            type="number"
+                            placeholder="Death Year"
+                            value={deathYear}
+                            onChange={(e) => setDeathYear(e.target.value)}
                         />
                     </label>
-
-                    <div>
-                        <label>Professions:</label>
-                        {formData.primaryProfessions.map((profession, index) => (
-                            <div key={index}>
-                                <input
-                                    type="text"
-                                    name="professionName"
-                                    value={profession.professionName}
-                                    onChange={(e) => handleInputChange(e, index)}
-                                    placeholder="e.g., Actor, Director"
-                                />
-                                {formData.primaryProfessions.length > 1 && (
-                                    <button type="button" onClick={() => handleRemoveProfession(index)}>
-                                        Remove Profession
-                                    </button>
-                                )}
-                            </div>
-                        ))}
-                        <button type="button" onClick={handleAddProfession}>
-                            Add Profession
-                        </button>
-                    </div>
-
-                    <div>
-                        <label>Known For (Comma-separated Titles):</label>
-                        <input
-                            type="text"
-                            name="knownFor"
-                            value={formData.knownFor}
-                            onChange={(e) => setFormData({ ...formData, knownFor: e.target.value.split(',') })}
-                            placeholder="e.g., tt1234567, tt7654321"
-                        />
-                    </div>
-
-                    <button type="submit">Create Person</button>
+                    <button type="submit" disabled={loading}>
+                        {loading ? 'Creating Person...' : 'Create Person'}
+                    </button>
                 </form>
+
+                {/* Display message below the form */}
                 <p>{message}</p>
             </main>
         </div>
     );
 };
 
-export default CreatePerson;
+export default TestCreatePerson;

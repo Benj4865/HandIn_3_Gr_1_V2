@@ -51,6 +51,9 @@ const TestCreateUser = () => {
             // Log the response data for debugging
             console.log("Received response:", data);
 
+            // Set success message if user is created
+            setMessage("User successfully created!");
+
         } catch (error) {
             // Log the error and set a failure message
             console.error('Error:', error);
@@ -61,7 +64,7 @@ const TestCreateUser = () => {
     return (
         <div>
             <header className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Create User</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
