@@ -8,7 +8,7 @@ import ReadActor from './ReadActor.jsx';
 import ReadUser from "./ReadUser.jsx";
 import CreateUser from './CreateUser.jsx';
 import DeleteUser from './DeleteUser';
-import Title from './Title';
+import ReadTitle from './ReadTitle.jsx';
 import ChangePerson from './UpdatePerson.jsx';
 import ChangeUser from './UpdateUser.jsx';
 import DeleteTitle from "./DeleteTitle.jsx";
@@ -28,7 +28,7 @@ if (rootElement) {
                     <Route path="/actor" element={<ReadActor />} />
                     <Route path="/CreateUser" element={<CreateUser />} />
                     <Route path="/DeleteUser" element={<DeleteUser />} />
-                    <Route path="/Title" element={<Title />} />
+                    <Route path="/ReadTitle" element={<ReadTitle />} />
                     <Route path="/ChangePerson" element={<ChangePerson />} />
                     <Route path="/ChangeUser" element={<ChangeUser />} />
                     <Route path="/DeleteTitle" element={<DeleteTitle />}/>

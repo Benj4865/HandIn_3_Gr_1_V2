@@ -50,8 +50,8 @@ const DeletePerson = () => {
                         <Link to="/user">User</Link>
                         <Link to="/ChangeUser">Change User</Link>
                         <Link to="/ChangePerson">Change Person</Link>
-                        <Link to="/Title">Title</Link>
-                        <Link to="/DeleteTitle">Delete Title</Link>
+                        <Link to="/ReadTitle">ReadTitle</Link>
+                        <Link to="/DeleteTitle">Delete ReadTitle</Link>
                     </div>
                 </div>
             </div>

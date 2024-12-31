@@ -36,7 +36,7 @@ const UpdateTitle = () => {
                         setOriginalTitleData(data); // Save the original data for comparison
                         setError('');
                     } else {
-                        throw new Error('Title not found');
+                        throw new Error('ReadTitle not found');
                     }
                 } catch (err) {
                     setError(err.message);
@@ -100,7 +100,7 @@ const UpdateTitle = () => {
             });
 
             if (response.ok) {
-                setMessage('Title updated successfully!');
+                setMessage('ReadTitle updated successfully!');
                 setError('');
                 setOriginalTitleData(titleData); // Update original data after successful update
             } else {
@@ -126,14 +126,14 @@ const UpdateTitle = () => {
                         <Link to="/user">User</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/Title">Title</Link>
+                        <Link to="/ReadTitle">ReadTitle</Link>
                         <Link to="/DeleteTitle">DeleteTitle</Link>
                     </div>
                 </div>
             </header>
 
             <main>
-                <h1>Update Title</h1>
+                <h1>Update ReadTitle</h1>
 
                 <div>
                     <label htmlFor="tconst">Movie Identifier (tconst):</label>
@@ -149,7 +149,7 @@ const UpdateTitle = () => {
                 {tconst && (
                     <form onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor="titleType">Title Type:</label>
+                            <label htmlFor="titleType">ReadTitle Type:</label>
                             <input
                                 type="text"
                                 id="titleType"
@@ -159,7 +159,7 @@ const UpdateTitle = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="primaryTitle">Primary Title:</label>
+                            <label htmlFor="primaryTitle">Primary ReadTitle:</label>
                             <input
                                 type="text"
                                 id="primaryTitle"
@@ -169,7 +169,7 @@ const UpdateTitle = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="originalTitle">Original Title:</label>
+                            <label htmlFor="originalTitle">Original ReadTitle:</label>
                             <input
                                 type="text"
                                 id="originalTitle"
@@ -268,7 +268,7 @@ const UpdateTitle = () => {
                             />
                         </div>
                         <button type="submit" disabled={loading}>
-                            {loading ? 'Updating...' : 'Update Title'}
+                            {loading ? 'Updating...' : 'Update ReadTitle'}
                         </button>
                     </form>
                 )}

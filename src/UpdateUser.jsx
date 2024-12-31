@@ -99,7 +99,7 @@ const UpdateUser = () => {
                         <Link to="/user">User</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/Title">Title</Link>
+                        <Link to="/ReadTitle">ReadTitle</Link>
                         <Link to="/DeleteTitle">DeleteTitle</Link>
                     </div>
                 </div>

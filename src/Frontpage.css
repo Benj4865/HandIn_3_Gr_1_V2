@@ -20,7 +20,7 @@ body {
   padding: 0 10px; /* Add some padding to avoid overflow */
 }
 
-/* Title text style */
+/* ReadTitle text style */
 .titletext {
   font-size: 5vw; /* Use viewport width for scaling */
   color: seagreen;

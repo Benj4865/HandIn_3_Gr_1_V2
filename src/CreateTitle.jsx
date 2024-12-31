@@ -56,7 +56,7 @@ function CreateTitle() {
 
             if (response.ok) {
                 const result = await response.json();
-                setMessage('Title created successfully!');
+                setMessage('ReadTitle created successfully!');
                 console.log(result); // You can handle the result or show additional feedback.
             } else {
                 setMessage('Failed to create title. Please try again.');
@@ -79,14 +79,14 @@ function CreateTitle() {
                         <Link to="/user">User</Link>
                         <Link to="/ChangePerson">Change Person</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/Title">Title</Link>
-                        <Link to="/DeleteTitle">Delete Title</Link>
+                        <Link to="/ReadTitle">ReadTitle</Link>
+                        <Link to="/DeleteTitle">Delete ReadTitle</Link>
                     </div>
                 </div>
             </header>
 
-            {/* Form for Creating a Title */}
-            <h2>Create Title</h2>
+            {/* Form for Creating a ReadTitle */}
+            <h2>Create ReadTitle</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Tconst:</label>
@@ -99,7 +99,7 @@ function CreateTitle() {
                     />
                 </div>
                 <div>
-                    <label>Title Type:</label>
+                    <label>ReadTitle Type:</label>
                     <input
                         type="text"
                         name="titleType"
@@ -109,7 +109,7 @@ function CreateTitle() {
                     />
                 </div>
                 <div>
-                    <label>Primary Title:</label>
+                    <label>Primary ReadTitle:</label>
                     <input
                         type="text"
                         name="primaryTitle"
@@ -119,7 +119,7 @@ function CreateTitle() {
                     />
                 </div>
                 <div>
-                    <label>Original Title:</label>
+                    <label>Original ReadTitle:</label>
                     <input
                         type="text"
                         name="originalTitle"
@@ -191,7 +191,7 @@ function CreateTitle() {
                         onChange={handleInputChange}
                     ></textarea>
                 </div>
-                <button type="submit">Create Title</button>
+                <button type="submit">Create ReadTitle</button>
             </form>
 
             {message && <p>{message}</p>}

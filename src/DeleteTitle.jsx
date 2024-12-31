@@ -34,7 +34,7 @@ const DeleteTitle = () => {
             if (!response.ok) {
                 throw new Error('Failed to delete title');
             }
-            setMessage('Title successfully deleted.');
+            setMessage('ReadTitle successfully deleted.');
             setTitle(null);
             setTconst('');
         } catch (error) {
