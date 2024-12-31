@@ -9,7 +9,7 @@ const DeleteTitle = () => {
 
     const handleFetchTitle = async () => {
         try {
-            const response = await fetch(`https://localhost:7126/api/title/${tconst}`);
+            const response = await fetch(`https://localhost:7126/api/title/${encodeURIComponent(tconst)}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch title');
             }
@@ -24,17 +24,15 @@ const DeleteTitle = () => {
 
     const handleDeleteTitle = async () => {
         try {
-            const response = await fetch('https://localhost:7126/api/title/deletetitle', {
+            const response = await fetch(`https://localhost:7126/api/title/deletetitle/${encodeURIComponent(tconst)}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ tconst }),
             });
+
             if (!response.ok) {
                 throw new Error('Failed to delete title');
             }
-            setMessage('ReadTitle successfully deleted.');
+
+            setMessage('Title successfully deleted.');
             setTitle(null);
             setTconst('');
         } catch (error) {
@@ -74,14 +72,22 @@ const DeleteTitle = () => {
                     onChange={(e) => setTconst(e.target.value)}
                     className="input-field"
                 />
-                <button type="submit" className="submit-button">Fetch Title</button>
+                <button type="submit" className="submit-button">Search Tconst of title</button>
             </form>
 
             {title && (
                 <div>
                     <h2>Title Details:</h2>
-                    <p><strong>Name:</strong> {title.name}</p>
-                    <p><strong>Year:</strong> {title.year}</p>
+                    <p><strong>Title Type:</strong> {title.titleType}</p>
+                    <p><strong>Primary Title:</strong> {title.primaryTitle}</p>
+                    <p><strong>Original Title:</strong> {title.originalTitle}</p>
+                    <p><strong>Is Adult:</strong> {title.isAdult}</p>
+                    <p><strong>Start Year:</strong> {title.startYear}</p>
+                    <p><strong>End Year:</strong> {title.endYear}</p>
+                    <p><strong>Runtime Minutes:</strong> {title.runtimeMinutes}</p>
+                    <p><strong>Genre List:</strong> {title.genreList}</p>
+                    <p><strong>Poster Link:</strong> {title.posterLink}</p>
+                    <p><strong>Plot:</strong> {title.plot}</p>
                     <button onClick={handleDeleteTitle} className="delete-button">Delete Title</button>
                 </div>
             )}
