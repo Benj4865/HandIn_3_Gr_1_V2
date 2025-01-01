@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importing components
 import Frontpage from './Frontpage';
-import ReadActor from './ReadActor.jsx';
+import ReadPerson from './ReadPerson.jsx';
 import ReadUser from "./ReadUser.jsx";
 import CreateUser from './CreateUser.jsx';
 import DeleteUser from './DeleteUser';
 import ReadTitle from './ReadTitle.jsx';
-import ChangePerson from './UpdatePerson.jsx';
-import ChangeUser from './UpdateUser.jsx';
+import UpdatePerson from './UpdatePerson.jsx';
+import UpdateUser from './UpdateUser.jsx';
 import DeleteTitle from "./DeleteTitle.jsx";
 import DeletePerson from "./DeletePerson.jsx";
 import UpdateTitle from "./UpdateTitle.jsx";
@@ -23,20 +23,26 @@ if (rootElement) {
         <React.StrictMode>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Frontpage />} /> {/* Root route */}
+                    <Route path="/" element={<Frontpage />} />
+
+                    {/* Front page*/}
                     <Route path="/Frontpage" element={<Frontpage />} />
-                    <Route path="/actor" element={<ReadActor />} />
-                    <Route path="/CreateUser" element={<CreateUser />} />
-                    <Route path="/DeleteUser" element={<DeleteUser />} />
-                    <Route path="/ReadTitle" element={<ReadTitle />} />
-                    <Route path="/ChangePerson" element={<ChangePerson />} />
-                    <Route path="/ChangeUser" element={<ChangeUser />} />
-                    <Route path="/DeleteTitle" element={<DeleteTitle />}/>
-                    <Route path="/UpdateTitle" element={<UpdateTitle />}/>
-                    <Route path="/CreateTitle" element={<CreateTitle />}/>
+                    {/* Person = People like actors and directors */}
                     <Route path="/CreatePerson" element={<CreatePerson />}/>
-                    <Route path="/DeletePerson" element={<DeletePerson />}/>
-                    <Route path="/ReadUser" element={<ReadUser/>}/>
+                    <Route path="/UpdatePerson" element={<UpdatePerson />} />
+                    <Route path="/ReadPerson" element={<ReadPerson />} />
+                    <Route path="/DeletePerson" element={<DeletePerson />} />
+                    {/* Users */}
+                    <Route path="/CreateUser" element={<CreateUser />} />
+                    <Route path="/ReadUser" element={<ReadUser />}/>
+                    <Route path="/UpdateUser" element={<UpdateUser />} />
+                    <Route path="/DeleteUser" element={<DeleteUser />} />
+                    {/* Movies and series */}
+                    <Route path="/CreateTitle" element={<CreateTitle />}/>
+                    <Route path="/ReadTitle" element={<ReadTitle />} />
+                    <Route path="/UpdateTitle" element={<UpdateTitle />}/>
+                    <Route path="/DeleteTitle" element={<DeleteTitle />}/>
+
                 </Routes>
             </Router>
         </React.StrictMode>

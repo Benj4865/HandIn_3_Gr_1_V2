@@ -8,7 +8,7 @@ const UpdateUser = () => {
         userPassword: '',
         userEmail: '',
     });
-    const [originalUserData, setOriginalUserData] = useState({}); // Holds original data
+
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -23,7 +23,6 @@ const UpdateUser = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setUserData(data);
-                        setOriginalUserData(data); // Save the original data for comparison
                         setError('');
                     } else {
                         throw new Error('User not found');
@@ -47,15 +46,13 @@ const UpdateUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if required fields are filled
         if (!userID || !userData.userName || !userData.userPassword || !userData.userEmail) {
             setError('Please fill all required fields');
             return;
         }
 
-        // Prepare the data to send in the request
         const dataToUpdate = {
-            userID: parseInt(userID) || null, // Ensure userID is an integer
+            userID: parseInt(userID) || null,
             userName: userData.userName || null,
             userPassword: userData.userPassword || null,
             userEmail: userData.userEmail || null,
@@ -74,7 +71,7 @@ const UpdateUser = () => {
                 setMessage('User updated successfully!');
                 setError('');
 
-                // Refresh the page after successful update
+
                 window.location.reload();
             } else {
                 const errorDetails = await response.text();
@@ -90,24 +87,32 @@ const UpdateUser = () => {
     return (
         <div>
             <header className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Update User</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>
 
             <main>
-                <h1>Update User</h1>
-
                 <div>
                     <label htmlFor="userID">User ID (Search by User ID):</label>
                     <input

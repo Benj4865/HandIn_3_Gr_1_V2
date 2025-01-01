@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const DeletePerson = () => {
-    const [nconst, setNconst] = useState(""); // Store the nconst
-    const [statusMessage, setStatusMessage] = useState(""); // For showing status message
+    const [nconst, setNconst] = useState("");
+    const [statusMessage, setStatusMessage] = useState("");
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -14,25 +14,22 @@ const DeletePerson = () => {
         }
 
         try {
-            // Use the nconst provided by the user in the URL
             const response = await fetch(`https://localhost:7126/api/person/deleteperson/${nconst}`, {
-                method: "POST", // Use POST as specified
+                method: "POST",
                 headers: {
                     "accept": "*/*",
                 },
-                body: '', // Empty body as shown in your cURL example
+                body: '',
             });
 
             if (response.ok) {
                 setStatusMessage("Person has been deleted successfully.");
-                setNconst(""); // Clear input field after successful deletion
+                setNconst("");
             } else {
-                // If the response is not successful, handle the error
                 const errorData = await response.json();
                 setStatusMessage(`Failed to delete person: ${errorData.message || "Unknown error"}`);
             }
         } catch (error) {
-            // Catch any errors from the request
             console.error('Error occurred during POST request:', error);
             setStatusMessage("An error occurred. Please try again later.");
         }
@@ -41,26 +38,35 @@ const DeletePerson = () => {
     return (
         <div>
             <div className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">DeletePerson</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangeUser">Change User</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">Delete ReadTitle</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
+                        <Link to="/DeleteUser">Delete User</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </div>
 
             <div className="delete-person-container">
-                <h2>Delete Person</h2>
                 <form onSubmit={handleDelete}>
                     <div className="form-group">
-                        <label htmlFor="nconst">Person's nconst:</label>
+                        <label htmlFor="nconst">Persons nconst:</label>
                         <input
                             type="text"
                             id="nconst"

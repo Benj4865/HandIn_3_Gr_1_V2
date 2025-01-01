@@ -9,9 +9,9 @@ const TestCreatePerson = () => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent form submission reload
+        e.preventDefault(); // Prevent reload when submiting
 
-        // Client-side validation
+
         if (!primaryName) {
             setMessage("The Primaryname field is required.");
             return;
@@ -27,44 +27,44 @@ const TestCreatePerson = () => {
             return;
         }
 
-        // Construct the URL with query parameters
+        // the URL with query parameters
         const url = `https://localhost:7126/api/person/createperson?PrimaryName=${primaryName}&BirthYear=${birthYear}&DeathYear=${deathYear}`;
 
-        console.log("Sending request to:", url);  // Log the URL for debugging
+        console.log("Sending request to:", url);
 
-        setLoading(true);  // Start loading
+        setLoading(true);
 
         try {
             const response = await fetch(url, {
-                method: 'POST', // Use POST method to create a resource
+                method: 'POST', // POST method used to create a resource
                 headers: {
-                    'Accept': '*/*',  // Set the appropriate headers
+                    'Accept': '*/*',
                 },
-                body: '', // Send an empty body (as done in the curl example)
+                body: '',
             });
 
-            // Check if the response is successful
+            // Error handeling
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            // Check for response content type
+
             const contentType = response.headers.get('Content-Type');
             let data = null;
 
             if (contentType && contentType.includes('application/json')) {
-                // If the response is JSON, parse it
+
                 data = await response.json();
             } else {
-                // If the response is not JSON, handle it as text
+
                 const responseText = await response.text();
-                data = responseText;  // Store the raw response text
+                data = responseText;
             }
 
-            // Log the response data
+
             console.log("Received response:", data);
 
-            // Success message
+
             setMessage("Successfully created new person!");
         } catch (error) {
             console.error('Error:', error);
@@ -81,13 +81,23 @@ const TestCreatePerson = () => {
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/ChangeUser">ChangeUser</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>
@@ -126,8 +136,6 @@ const TestCreatePerson = () => {
                         {loading ? 'Creating Person...' : 'Create Person'}
                     </button>
                 </form>
-
-                {/* Display message below the form */}
                 <p>{message}</p>
             </main>
         </div>

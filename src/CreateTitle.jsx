@@ -57,7 +57,7 @@ function CreateTitle() {
             if (response.ok) {
                 const result = await response.json();
                 setMessage('ReadTitle created successfully!');
-                console.log(result); // You can handle the result or show additional feedback.
+                console.log(result);
             } else {
                 setMessage('Failed to create title. Please try again.');
             }
@@ -68,25 +68,32 @@ function CreateTitle() {
 
     return (
         <div>
-            {/* Header Section */}
             <header className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Create title</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">Delete ReadTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>
 
-            {/* Form for Creating a ReadTitle */}
-            <h2>Create ReadTitle</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Tconst:</label>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Actor.css';
 
-const ReadActor = () => {
+const ReadPerson = () => {
     const [inputValue, setInputValue] = useState('');
     const [personList, setPersonList] = useState([]);
     const [selectedPerson, setSelectedPerson] = useState(null);
@@ -91,17 +91,27 @@ const ReadActor = () => {
     return (
         <div>
             <div className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Read Person</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangeUser">ChangeUser</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </div>
@@ -185,4 +195,4 @@ const ReadActor = () => {
     );
 };
 
-export default ReadActor;
+export default ReadPerson;

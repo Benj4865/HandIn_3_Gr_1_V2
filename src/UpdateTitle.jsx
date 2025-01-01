@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const UpdateTitle = () => {
-    const [tconst, setTconst] = useState(''); // Store tconst for the title
+    const [tconst, setTconst] = useState('');
     const [titleData, setTitleData] = useState({
         titleType: '',
         primaryTitle: '',
@@ -17,11 +17,11 @@ const UpdateTitle = () => {
         numberOfVotes: 0,
         isEpisode: false,
     });
-    const [originalTitleData, setOriginalTitleData] = useState({}); // Save original data for comparison
+    const [originalTitleData, setOriginalTitleData] = useState({});
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const [removeSpaces, setRemoveSpaces] = useState(false); // Initialize the removeSpaces state
+    const [removeSpaces, setRemoveSpaces] = useState(false);
 
     // Fetch movie data based on tconst
     useEffect(() => {
@@ -33,7 +33,7 @@ const UpdateTitle = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setTitleData(data);
-                        setOriginalTitleData(data); // Save the original data for comparison
+                        setOriginalTitleData(data);
                         setError('');
                     } else {
                         throw new Error('ReadTitle not found');
@@ -48,7 +48,6 @@ const UpdateTitle = () => {
         }
     }, [tconst]);
 
-    // Handle input changes for movie details
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
         if (type === 'checkbox') {
@@ -61,21 +60,18 @@ const UpdateTitle = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if required fields are filled
         if (!tconst || !titleData.primaryTitle || !titleData.titleType) {
             setError('Please fill all required fields');
             return;
         }
 
-        // Compare data before updating to avoid unnecessary requests
         if (JSON.stringify(titleData) === JSON.stringify(originalTitleData)) {
             setError('No changes detected');
             return;
         }
 
-        // Prepare the data to send in the request
         const dataToUpdate = {
-            tconst: tconst, // Use the provided tconst
+            tconst: tconst, // Uses the tconst input for the user
             titleType: titleData.titleType,
             primaryTitle: titleData.primaryTitle,
             originalTitle: titleData.originalTitle || '',
@@ -102,7 +98,7 @@ const UpdateTitle = () => {
             if (response.ok) {
                 setMessage('ReadTitle updated successfully!');
                 setError('');
-                setOriginalTitleData(titleData); // Update original data after successful update
+                setOriginalTitleData(titleData);
             } else {
                 const errorDetails = await response.text();
                 console.error('Error Details:', errorDetails);
@@ -117,24 +113,32 @@ const UpdateTitle = () => {
     return (
         <div>
             <header className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Update Title</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>
 
             <main>
-                <h1>Update ReadTitle</h1>
-
                 <div>
                     <label htmlFor="tconst">Movie Identifier (tconst):</label>
                     <input
@@ -272,16 +276,6 @@ const UpdateTitle = () => {
                         </button>
                     </form>
                 )}
-
-                <div className="checkbox-container" style={{marginTop: '20px', textAlign: 'right'}}>
-                    <input
-                        type="checkbox"
-                        id="removeSpaces"
-                        checked={removeSpaces}
-                        onChange={() => setRemoveSpaces(!removeSpaces)}
-                    />
-                    <label htmlFor="removeSpaces" style={{color: 'red'}}>Remove spaces before updating</label>
-                </div>
 
                 {message && <div className="success-message">{message}</div>}
                 {error && <div className="error-message">{error}</div>}

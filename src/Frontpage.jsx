@@ -1,119 +1,38 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './Frontpage.css';
 
 const Frontpage = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [userData, setUserData] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleInputChange = (event) => {
-        setInputValue(event.target.value);
-    };
-
-    const handleButtonClick = async () => {
-        if (!inputValue.trim()) {
-            setErrorMessage('Please enter a valid User ID.');
-            setUserData(null);
-            return;
-        }
-
-        setIsLoading(true);
-        setErrorMessage('');
-        setUserData(null);
-
-        try {
-            const apiUrl = `https://localhost:7126/api/users/${inputValue}`;
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            setUserData(data);
-            setInputValue('');
-        } catch (error) {
-            console.error('Error communicating with backend:', error);
-            setErrorMessage('Error communicating with backend. Please try again later.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            handleButtonClick();
-        }
-    };
-
     return (
         <div>
-            <div className="headstyle">
+            <header className="headstyle">
                 <h1 className="titletext">IMDB</h1>
-                <div className="dropdown">
+                <nav className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
-                        <Link to="/actor">Actor Page</Link>
+                        {/*every link that except the page you are on*/}
+                        {/*every link that has to do with users*/}
                         <Link to="/CreateUser">Create User</Link>
-                        <Link to="/ChangeUser">ChangeUser</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
-                        <Link to="/UpdateTitle">UpdateTitle</Link>
-                        <Link to="/CreateTitle">CreateTitle</Link>
-                        <Link to="/CreatePerson">Creatperson</Link>
-                        <Link to="/DeletePerson">Deleteperson</Link>
-                        <Link to="/ReadUser">ReadUser</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
-                </div>
-            </div>
+                </nav>
+            </header>
 
-            <div className="containerStyle">
-                <label htmlFor="userId" className="input-label">Enter User ID:</label>
-                <input
-                    id="userId"
-                    type="text"
-                    placeholder="Enter User ID"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyPress}
-                    className="input-field"
-                    disabled={isLoading}
-                />
-                <button
-                    className="buttonStyle"
-                    onClick={handleButtonClick}
-                    disabled={isLoading}
-                >
-                    {isLoading ? 'Loading...' : 'Submit'}
-                </button>
-            </div>
-
-            {errorMessage && (
-                <div className="error-message">
-                    <strong>Error:</strong> {errorMessage}
-                </div>
-            )}
-
-            {userData && (
-                <main className="maincontent">
-                    <div className="user-data">
-                        <h2>User Details:</h2>
-                        <p><strong>User ID:</strong> {userData.userID}</p>
-                        <p><strong>User Link:</strong> <a href={userData.userlink}>{userData.userlink}</a></p>
-                        <p><strong>User Name:</strong> {userData.userName}</p>
-                        <p><strong>User Email:</strong> {userData.userEmail}</p>
-                    </div>
-                </main>
-            )}
+            <main className="containerStyle">
+                <p>This is the front page. From here, you can find all the different actions available in the top-left corner called Menu.</p>
+            </main>
         </div>
     );
 };

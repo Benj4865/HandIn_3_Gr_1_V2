@@ -8,20 +8,18 @@ const TestCreateUser = () => {
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent form submission reload
+        e.preventDefault();
 
-        // Prepare the data to be sent in the request
         const userData = {
             UserName: userName,
             UserPassword: userPassword,
             UserEmail: userEmail,
         };
 
-        // Log the data being sent for debugging
+
         console.log("Sending data:", userData);
 
         try {
-            // Send a POST request to the backend
             const response = await fetch('https://localhost:7126/api/users/createuser', {
                 method: 'POST',
                 headers: {
@@ -30,32 +28,25 @@ const TestCreateUser = () => {
                 body: JSON.stringify(userData),
             });
 
-            // Check if the response is successful (HTTP status 200-299)
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            // Read response body once based on content type
             let data;
             const contentType = response.headers.get('Content-Type');
 
             if (contentType && contentType.includes('application/json')) {
-                // Try parsing the response as JSON
                 data = await response.json();
             } else {
-                // If not JSON, handle it as plain text
                 const text = await response.text();
-                data = { message: text }; // Set the response text as the message
+                data = { message: text };
             }
 
-            // Log the response data for debugging
             console.log("Received response:", data);
 
-            // Set success message if user is created
             setMessage("User successfully created!");
 
         } catch (error) {
-            // Log the error and set a failure message
             console.error('Error:', error);
             setMessage(`Failed to create user. Error details: ${error.message}`);
         }
@@ -68,13 +59,23 @@ const TestCreateUser = () => {
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/ChangeUser">ChangeUser</Link>
-                        <Link to="/ChangePerson">Change Person</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/UpdatePerson">UpdatePerson</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>

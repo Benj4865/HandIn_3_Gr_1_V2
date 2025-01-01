@@ -41,7 +41,7 @@ const UpdatePerson = () => {
         }
     }, [nconst]);
 
-    // Handle input changes
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPersonData((prevData) => ({ ...prevData, [name]: value }));
@@ -51,13 +51,12 @@ const UpdatePerson = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if required fields are filled
+        //Checking of the data that needs to be send is filled out
         if (!nconst || !personData.primaryname || !personData.birthyear || !personData.deathyear) {
             setError('Please fill all required fields');
             return;
         }
 
-        // Remove spaces if checkbox is checked
         const cleanedData = { ...personData };
         if (removeSpaces) {
             for (let key in cleanedData) {
@@ -67,7 +66,6 @@ const UpdatePerson = () => {
             }
         }
 
-        // Prepare the data to send in the request
         const dataToUpdate = {
             Nconst: nconst || null,
             Primaryname: cleanedData.primaryname || null,
@@ -84,7 +82,7 @@ const UpdatePerson = () => {
 
         try {
             const response = await fetch(`https://localhost:7126/api/person/updateperson?${queryString}`, {
-                method: 'POST', // Use POST or PUT as required by your API
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
             });
 
@@ -92,7 +90,7 @@ const UpdatePerson = () => {
                 setMessage('Person updated successfully!');
                 setError('');
 
-                // Refresh the page after successful update
+                // reloads the window so the site does not just go blank
                 window.location.reload();
             } else {
                 const errorDetails = await response.text();
@@ -108,24 +106,32 @@ const UpdatePerson = () => {
     return (
         <div>
             <header className="headstyle">
-                <h1 className="titletext">IMDB</h1>
+                <h1 className="titletext">Update Person</h1>
                 <div className="dropdown">
                     <button className="dropbtn">Menu</button>
                     <div className="dropdown-content">
+                        {/*every link that except the page you are on*/}
+                        {/*Frontpage*/}
                         <Link to="/Frontpage">Frontpage</Link>
-                        <Link to="/actor">Actor Page</Link>
-                        <Link to="/user">User</Link>
-                        <Link to="/ChangeUser">ChangeUser</Link>
+                        {/*every link that has to do with users*/}
+                        <Link to="/CreateUser">Create User</Link>
+                        <Link to="/ReadUser">Read User</Link>
+                        <Link to="/UpdateUser">UpdateUser</Link>
                         <Link to="/DeleteUser">Delete User</Link>
-                        <Link to="/ReadTitle">ReadTitle</Link>
-                        <Link to="/DeleteTitle">DeleteTitle</Link>
+                        {/*every link that has to do with people in the business*/}
+                        <Link to="/CreatePerson">Create Person</Link>
+                        <Link to="/ReadPerson">Read Person</Link>
+                        <Link to="/DeletePerson">Delete Person</Link>
+                        {/*every link that has to do with titles*/}
+                        <Link to="/CreateTitle">Create Title</Link>
+                        <Link to="/ReadTitle">Read Title</Link>
+                        <Link to="/UpdateTitle">Update Title</Link>
+                        <Link to="/DeleteTitle">Delete Title</Link>
                     </div>
                 </div>
             </header>
 
             <main>
-                <h1>Update Person</h1>
-
                 <div>
                     <label htmlFor="nconst">Nconst (Search by Nconst):</label>
                     <input
@@ -137,6 +143,7 @@ const UpdatePerson = () => {
                     />
                 </div>
 
+                {/*uses the nconst to acces the data and fill it in*/}
                 {nconst && (
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -195,7 +202,7 @@ const UpdatePerson = () => {
                     </form>
                 )}
 
-
+                {/*
                 <div className="checkbox-container" style={{marginTop: '20px', textAlign: 'right'}}>
                     <input
                         type="checkbox"
@@ -205,7 +212,7 @@ const UpdatePerson = () => {
                     />
                     <label htmlFor="removeSpaces" style={{color: 'red'}}>Remove spaces before updating</label>
                 </div>
-
+                */}
 
                 {message && <div className="success-message">{message}</div>}
                 {error && <div className="error-message">{error}</div>}
