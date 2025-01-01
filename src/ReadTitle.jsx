@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Actor.css';
+import "./ReadTitle.css";
 
 const ReadTitle = () => {
     const [inputValue, setInputValue] = useState('');

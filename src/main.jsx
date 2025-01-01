@@ -7,7 +7,7 @@ import Frontpage from './Frontpage';
 import ReadPerson from './ReadPerson.jsx';
 import ReadUser from "./ReadUser.jsx";
 import CreateUser from './CreateUser.jsx';
-import DeleteUser from './DeleteUser';
+import DeleteUser from './DeleteUser.jsx';
 import ReadTitle from './ReadTitle.jsx';
 import UpdatePerson from './UpdatePerson.jsx';
 import UpdateUser from './UpdateUser.jsx';
