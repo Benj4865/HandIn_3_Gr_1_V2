@@ -66,7 +66,6 @@ const DeleteUser = () => {
             </div>
 
             <div className="delete-user-container">
-                <h2>Delete User</h2>
                 <form onSubmit={handleDelete}>
                     <div className="form-group">
                         <label htmlFor="userID">User ID:</label>

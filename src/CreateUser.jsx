@@ -82,7 +82,6 @@ const TestCreateUser = () => {
 
             <main>
                 <form onSubmit={handleSubmit}>
-                    <h2>Create User</h2>
                     <label>
                         Username:
                         <input

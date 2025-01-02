@@ -77,7 +77,7 @@ const UpdatePerson = () => {
 
         console.log('Request Payload:', JSON.stringify(dataToUpdate));
 
-        // Build query string
+
         const queryString = new URLSearchParams(dataToUpdate).toString();
 
         try {
@@ -143,7 +143,6 @@ const UpdatePerson = () => {
                     />
                 </div>
 
-                {/*uses the nconst to acces the data and fill it in*/}
                 {nconst && (
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -202,7 +201,7 @@ const UpdatePerson = () => {
                     </form>
                 )}
 
-                {/*
+
                 <div className="checkbox-container" style={{marginTop: '20px', textAlign: 'right'}}>
                     <input
                         type="checkbox"
@@ -212,7 +211,7 @@ const UpdatePerson = () => {
                     />
                     <label htmlFor="removeSpaces" style={{color: 'red'}}>Remove spaces before updating</label>
                 </div>
-                */}
+
 
                 {message && <div className="success-message">{message}</div>}
                 {error && <div className="error-message">{error}</div>}

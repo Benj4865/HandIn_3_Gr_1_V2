@@ -104,7 +104,6 @@ const TestCreatePerson = () => {
 
             <main>
                 <form onSubmit={handleSubmit}>
-                    <h2>Create Person</h2>
                     <label>
                         Primary Name:
                         <input

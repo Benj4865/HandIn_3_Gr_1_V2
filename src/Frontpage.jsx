@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Frontpage.css';
-
+// Done last push
 const Frontpage = () => {
     return (
         <div>
